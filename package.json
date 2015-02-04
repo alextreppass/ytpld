@@ -1,24 +1,39 @@
 {
-  "name": "ytpl-downloader",
+  "name": "ytpld",
   "version": "0.0.1",
-  "description": "Youtube Playlist Downloader",
-  "main": "index.js",
+  "description": "a horrible YouTube playlist downloader",
+  "main": "./index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/alextreppass/ytpld.git"
+  },
+  "preferGlobal": true,
+  "bin": {
+    "ytpld": "./bin/ytpld.js"
   },
   "keywords": [
     "youtube",
     "playlist",
     "downloader"
   ],
-  "author": "Alex Treppass",
-  "license": "ISC",
+  "author": "Alex Treppass (https://github.com/alextreppass)",
   "dependencies": {
     "async": "^0.9.0",
+    "bluebird": "^2.9.6",
     "cheerio": "^0.18.0",
     "lodash": "^3.1.0",
     "minimist": "^1.1.0",
     "request": "^2.53.0",
+    "sanitize-filename": "^1.1.3",
     "ytdl-core": "fent/node-ytdl-core"
-  }
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://raw.githubusercontent.com/alextreppass/ytpld/master/LICENCE"
+    }
+  ]
 }
