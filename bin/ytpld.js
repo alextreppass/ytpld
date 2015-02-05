@@ -10,6 +10,8 @@ var ytdl = require('ytdl-core');
 var Promise = require('bluebird');
 var request = Promise.promisifyAll(require('request'));
 
+var Class = require('../lib/class');
+
 var DEFAULT_CONFIG = {
   parallelDownloads: 3,
   requestOptions: {
@@ -23,13 +25,13 @@ var DEFAULT_CONFIG = {
   youtubeBase: 'https://www.youtube.com'
 };
 
-var YTPLD = function (config) {
-  this.config = _.extend({}, DEFAULT_CONFIG, config);
-  this.filenames = [];
-  this.fileErrors = [];
-};
+var YTPLD = Class({
 
-_.extend(YTPLD.prototype, {
+  constructor: function (config) {
+    this.config = _.extend({}, DEFAULT_CONFIG, config);
+    this.filenames = [];
+    this.fileErrors = [];
+  },
 
   run: function () {
     var self = this;
