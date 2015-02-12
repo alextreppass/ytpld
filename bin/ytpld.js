@@ -31,6 +31,7 @@ var YTPLD = Class({
     this.config = _.extend({}, DEFAULT_CONFIG, config);
     this.filenames = [];
     this.fileErrors = [];
+    this.tasks = [];
   },
 
   run: function () {
@@ -75,8 +76,8 @@ var YTPLD = Class({
     var $ = this.$;
     var $titleLinks = $(this.config.videoLinkSelector);
 
-    this.tasks = _.map($titleLinks, function (link) {
-      return this._taskForTitleLink($(link));
+    this.tasks = _.map($titleLinks, function (link, index) {
+      return this._taskForTitleLink($(link), index + 1);
     }, this);
 
     console.log('Found', this.tasks.length, 'videos in playlist');
@@ -86,34 +87,44 @@ var YTPLD = Class({
     }
   },
 
-  _taskForTitleLink: function ($link) {
-    var title = this._standardiseTitle($link.text());
+  _taskForTitleLink: function ($link, index) {
+    var title = this._standardiseTitle($link.text(), index);
     var url = this._standardiseUrl($link.attr('href'));
-    var filenames = this.filenames;;
-    var fileErrors = this.fileErrors;
 
     return function (asyncFinished) {
       var readStream = ytdl(url);
       var fileName = title + '.flv';
-      filenames.push(fileName);
+
+      this.filenames.push(fileName);
 
       console.log('Started:', fileName, '...')
       readStream.pipe(fs.createWriteStream(fileName));
 
       readStream.on('error', function (error) {
         console.error('Error downloading:', fileName, error.message);
-        fileErrors.push(fileName);
+        this.fileErrors.push(fileName);
       });
 
       readStream.on('end', function () {
         console.log('Finished:', fileName);
         asyncFinished(null);
       });
-    };
+    }.bind(this);
   },
 
-  _standardiseTitle: function (title) {
-    return _.snakeCase(_.trim(title));
+  _standardiseTitle: function (title, index) {
+    var title = sanitizeFileName(_.trim(title));
+    return this._zeroPad(title, index);
+  },
+
+  // zero-pad titles to ensure asciibetical ordering of filenames
+  // e.g. task length 99 = [01, 02, ... 10, ... 99]
+  _zeroPad: function (title, index) {
+    var indexDigits = new String(index).length;
+    var taskDigits = new String(this.tasks.length).length;
+    var padding = 1 + (taskDigits - indexDigits);
+
+    return Array(padding + 1).join('0') + index + ' - ' + title;
   },
 
   _standardiseUrl: function (url) {
