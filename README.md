@@ -1,4 +1,4 @@
-# ytpld - a horrible YouTube playlist downloader
+# ytpld - a YouTube playlist downloader
 
 A quick and dirty command-line downloader of YouTube videos from a given playlist url, for offline viewing.
 
