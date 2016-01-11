@@ -1,8 +1,8 @@
 # ytpld - a YouTube playlist downloader
 
-A quick and dirty command-line downloader of YouTube videos from a given playlist url, for offline viewing.
+A command line YouTube playlist downloader, for offline viewing. Works on Windows, OSX and Linux - all you need is NodeJS.
 
-Dumps videos to the current folder, along with an m3u playlist.
+Downloads videos in flv format to the current folder, along with an m3u playlist.
 
 If you're looking to support your favourite content creators, please try to watch their videos online without adblock. If you can't always watch on YouTube (e.g. on the move with unreliable internet), well, then maybe this is for you.
 
@@ -28,7 +28,7 @@ e.g. ```ytpld https://www.youtube.com/playlist?list=PLhyKYa0YJ_5B-h_nwdtshOKv7NH
 
 ### Implementation Details
 
-This uses web scraping instead of doing it properly with the YouTube API. This means it might stop working very quickly, and is unashamedly against the YouTube T&Cs.
+This uses web scraping instead of doing it properly with the YouTube API. This means it might stop working very quickly (but has worked great since early 2015, and is still going strong in 2016!). It's also unashamedly against the YouTube T&Cs.
 
 If you're looking for something more robust, build out the playlist retrieval with [IonicaBizau/youtube-api](https://github.com/IonicaBizau/youtube-api).
 
